@@ -5,7 +5,7 @@
 # Activem directori de treball
 # S'han de canviar els slashs \ per /
 # El directori de treball es pot fixar manualment a l'opció "Session"
-setwd("~/RStudio/TREC_EliaAlbert_Climograma")
+setwd("~/development/trec/TR_Elia-Albert_OcellsSubirats_Climatologia")
 
 # Carreguem les llibreries
 library(googlesheets4)
