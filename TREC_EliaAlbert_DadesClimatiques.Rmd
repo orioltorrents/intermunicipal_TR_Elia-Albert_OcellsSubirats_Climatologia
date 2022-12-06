@@ -1,0 +1,393 @@
+---
+title: "Dades Climàtiques"
+author: "Èlia Albert & Oriol Torrents"
+date: "`r format (Sys.time(), '%d %B %Y')`"
+output: html_document
+keep_md: yes
+---
+
+```{r libraries, include=FALSE}
+library(googlesheets4)
+library(tidyverse)
+library(knitr)
+library(ggplot2)
+library(dplyr)
+library(climatol)
+library(climaemet)
+library(cowplot)
+library(gridExtra)
+library(ggpubr)
+library(lattice)
+library(latticeExtra)
+
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+```{r directory, include=FALSE}
+setwd("~/development/trec/TREC_EliaAlbert_Climograma")
+```
+
+
+```{r Import_Data, message=FALSE, warning=FALSE, include=FALSE}
+url_dadesclimatiques_elia <- "https://docs.google.com/spreadsheets/d/14kz6o8FV6U4E8W94gIh2lhzXeaiiA0SRemWVwYjdAvY/edit#gid=1976000054"
+dades_climatol_2022 <- googlesheets4::read_sheet(url_dadesclimatiques_elia, sheet = "Climatol 2022")
+dades_climatol_2021 <- googlesheets4::read_sheet(url_dadesclimatiques_elia, sheet = "Climatol 2021")
+dades_climatol_2020 <- googlesheets4::read_sheet(url_dadesclimatiques_elia, sheet = "Climatol 2020")
+dades_climatol_2019 <- googlesheets4::read_sheet(url_dadesclimatiques_elia, sheet = "Climatol 2019")
+dades_climatol_2018 <- googlesheets4::read_sheet(url_dadesclimatiques_elia, sheet = "Climatol 2018")
+```
+
+## L'estació metereològica
+Les dades climatològiques han estat enregistrades amb l'estació metereològica Davis Instruments Vantage Vue Pro 2 autoaspirada e inalambrica.
+
+## Les dades
+Les dades estan disponibles a la web  de <http://www.meteosantpau.eu/>. 
+
+## Climogrames 2018 - 2022
+
+Els climogrames han estat realitzats amb el packet de R "Climatol" creat i actualitzat per Jose A. Guijarro. Tota la informació sobre el paquet i les guies d'utilització, la podeu trobar a la seva pàgina web: <https://www.climatol.eu/> i una explicació gràfica <https://tehilinski.github.io/WLDiagram/>
+
+### 2022
+
+```{r climatol 2022, echo=FALSE}
+climatol_2022 <- dades_climatol_2022[2:13]
+# diagwl del paquet Climatol no es pot modificar
+diagwl(climatol_2022,est="Sant Pau d'Ordal",alt ="243", per=2022,mlab ="en")
+# ggclimat_walter_lieth del paquet climaemet es pot modificar com ggplot2
+ggclimat2022a <- ggclimat_walter_lieth(climatol_2022,est="Sant Pau d'Ordal",alt ="243", per=2022,mlab ="en")
+# Els tags de l'esquerra del grafic (temp màxim i minim) es poden treure
+ggclimat2022b <- ggclimat2022a + labs(tag = NULL)
+ggsave("ggclimat2022a-senseTags.png")
+# Amb el "Theme" canviant els parametres
+ggclimat2022b + theme(
+  plot.title = element_text(
+    size = "10"),
+  plot.subtitle = element_text(size = "8"),
+  axis.title.y.left = element_text(
+    size = "10"),
+  axis.title.y.right = element_text(
+    size = "10"),
+  axis.text.x.bottom = element_text(
+    colour = "black",
+    face = "bold",
+    size = "8"),
+  axis.text.y.left = element_text(
+    colour = "red",
+    face = "italic",
+    size = "10"),
+  axis.text.y.right = element_text(
+    colour = "blue",
+    face = "italic",
+    size = "10")
+)
+ggsave("ggclimat2022b-senseTags.png")
+knitr::opts_chunk$set(dev = "png",
+                      dpi = 300,
+                      echo = FALSE,
+                      cache = TRUE)
+```
+
+### 2021
+
+```{r climatol 2021, echo=FALSE}
+climatol_2021 <- dades_climatol_2021[2:13]
+# diagwl del paquet Climatol no es pot modificar
+climatol_2021_graph <- diagwl(climatol_2021,est="Sant Pau d'Ordal",alt ="243", per=2021,mlab ="en")
+# ggclimat_walter_lieth del paquet climaemet es pot modificar com ggplot2
+ggclimat2021a <- ggclimat_walter_lieth(climatol_2021,est="Sant Pau d'Ordal",alt ="243", per=2021,mlab ="en")
+# Els tags de l'esquerra del grafic (temp màxim i minim) es poden treure
+ggclimat2021b <- ggclimat2021a + labs(tag = NULL)
+ggsave("ggclimat2021a-senseTags.png")
+# Amb el "Theme" canviant els parametres
+ggclimat2021b + theme(
+  plot.title = element_text(
+    size = "10"),
+  plot.subtitle = element_text(size = "8"),
+  axis.title.y.left = element_text(
+    size = "10"),
+  axis.title.y.right = element_text(
+    size = "10"),
+  axis.text.x.bottom = element_text(
+    colour = "black",
+    face = "bold",
+    size = "8"),
+  axis.text.y.left = element_text(
+    colour = "red",
+    face = "italic",
+    size = "10"),
+  axis.text.y.right = element_text(
+    colour = "blue",
+    face = "italic",
+    size = "10")
+)
+ggsave("ggclimat2021b-senseTags.png")
+```
+
+### 2020
+
+```{r climatol 2020, echo=FALSE}
+climatol_2020 <- dades_climatol_2020[2:13]
+
+# diagwl del paquet Climatol no es pot modificar
+climatol_2020_graph <- diagwl(climatol_2020,est="Sant Pau d'Ordal",alt ="243", per=2020,mlab ="en")
+
+# ggclimat_walter_lieth del paquet climaemet es pot modificar com ggplot2
+ggclimat2020a <- ggclimat_walter_lieth(climatol_2020,est="Sant Pau d'Ordal",alt ="243", per=2020,mlab ="en")
+
+# Els tags de l'esquerra del grafic (temp màxim i minim) es poden treure
+ggclimat2020b <- ggclimat2020a + labs(tag = NULL)
+ggsave("ggclimat2020a-senseTags.png")
+# Amb el "Theme" canviant els parametres
+ggclimat2020b + theme(
+  plot.title = element_text(
+    size = "10"),
+  plot.subtitle = element_text(size = "8"),
+  axis.title.y.left = element_text(
+    size = "10"),
+  axis.title.y.right = element_text(
+    size = "10"),
+  axis.text.x.bottom = element_text(
+    colour = "black",
+    face = "bold",
+    size = "8"),
+  axis.text.y.left = element_text(
+    colour = "red",
+    face = "italic",
+    size = "10"),
+  axis.text.y.right = element_text(
+    colour = "blue",
+    face = "italic",
+    size = "10")
+)
+ggsave("ggclimat2020b-senseTags.png")
+```
+
+### 2019
+
+```{r climatol 2019, echo=FALSE}
+climatol_2019 <- dades_climatol_2019[2:13]
+
+# diagwl del paquet Climatol no es pot modificar
+climatol_2019_graph <- diagwl(climatol_2019,est="Sant Pau d'Ordal",alt ="243", per=2019,mlab ="en")
+
+# ggclimat_walter_lieth del paquet climaemet es pot modificar com ggplot2
+ggclimat2019a <- ggclimat_walter_lieth(climatol_2019,est="Sant Pau d'Ordal",alt ="243", per=2019,mlab ="en")
+
+# Els tags de l'esquerra del grafic (temp màxim i minim) es poden treure
+ggclimat2019b <- ggclimat2019a + labs(tag = NULL)
+ggsave("ggclimat2021a-senseTags.png")
+# Amb el "Theme" canviant els parametres
+ggclimat2019b + theme(
+  plot.title = element_text(
+    size = "10"),
+  plot.subtitle = element_text(size = "8"),
+  axis.title.y.left = element_text(
+    size = "10"),
+  axis.title.y.right = element_text(
+    size = "10"),
+  axis.text.x.bottom = element_text(
+    colour = "black",
+    face = "bold",
+    size = "8"),
+  axis.text.y.left = element_text(
+    colour = "red",
+    face = "italic",
+    size = "10"),
+  axis.text.y.right = element_text(
+    colour = "blue",
+    face = "italic",
+    size = "10")
+)
+ggsave("ggclimat2019b-senseTags.png")
+
+```
+
+### 2018
+
+```{r climatol 2018, echo=FALSE}
+climatol_2018 <- dades_climatol_2018[2:13]
+
+# diagwl del paquet Climatol no es pot modificar
+climatol_2018_graph <- diagwl(climatol_2018,est="Sant Pau d'Ordal",alt ="243", per=2018,mlab ="en")
+
+# ggclimat_walter_lieth del paquet climaemet es pot modificar com ggplot2
+ggclimat2018a <- ggclimat_walter_lieth(climatol_2018,est="Sant Pau d'Ordal",alt ="243", per=2018,mlab ="en")
+
+# Els tags de l'esquerra del grafic (temp màxim i minim) es poden treure
+ggclimat2018b <- ggclimat2018a + labs(tag = NULL)
+ggsave("ggclimat2018a-senseTags.png")
+# Amb el "Theme" canviant els parametres
+ggclimat2018b + theme(
+  plot.title = element_text(
+    size = "10"),
+  plot.subtitle = element_text(size = "8"),
+  axis.title.y.left = element_text(
+    size = "10"),
+  axis.title.y.right = element_text(
+    size = "10"),
+  axis.text.x.bottom = element_text(
+    colour = "black",
+    face = "bold",
+    size = "8"),
+  axis.text.y.left = element_text(
+    colour = "red",
+    face = "italic",
+    size = "10"),
+  axis.text.y.right = element_text(
+    colour = "blue",
+    face = "italic",
+    size = "10")
+)
+ggsave("ggclimat2018b-senseTags.png")
+
+```
+
+### 2018 - 2022
+
+```{r climatol 2018-2022, echo=FALSE}
+climatol_2018 <- dades_climatol_2018[2:13]
+climatol_2019 <- dades_climatol_2019[2:13]
+climatol_2020 <- dades_climatol_2020[2:13]
+climatol_2021 <- dades_climatol_2021[2:13]
+climatol_2022 <- dades_climatol_2022[2:13]
+
+ggclimat2018a <- ggclimat_walter_lieth(climatol_2018,est="Sant Pau d'Ordal",alt ="243", per=2018,mlab ="es")
+
+ggclimat2018b <- ggclimat2018a + labs(tag = NULL)
+
+ggclimat2018_theme <- ggclimat2018b + theme(
+  plot.title = element_blank(),
+  plot.subtitle = element_blank(),
+  axis.title.y.left = element_text(
+    size = "6"),
+  axis.title.y.right = element_text(
+    size = "6"),
+  axis.text.x.bottom = element_text(
+    colour = "black",
+    face = "bold",
+    size = "6"),
+  axis.text.y.left = element_text(
+    colour = "red",
+    face = "italic",
+    size = "6"),
+  axis.text.y.right = element_text(
+    colour = "blue",
+    face = "plain",
+    size = "6")
+)
+
+ggclimat2019a <- ggclimat_walter_lieth(climatol_2019,est="Sant Pau d'Ordal",alt ="243", per=2019,mlab ="es")
+
+ggclimat2019b <- ggclimat2019a + labs(tag = NULL)
+
+ggclimat2019_theme <- ggclimat2019b + theme(
+  plot.title = element_blank(),
+  plot.subtitle = element_blank(),
+  axis.title.y.left = element_text(
+    size = "6"),
+  axis.title.y.right = element_text(
+    size = "6"),
+  axis.text.x.bottom = element_text(
+    colour = "black",
+    face = "bold",
+    size = "6"),
+  axis.text.y.left = element_text(
+    colour = "red",
+    face = "italic",
+    size = "6"),
+  axis.text.y.right = element_text(
+    colour = "blue",
+    face = "plain",
+    size = "6")
+)
+
+ggclimat2020a <- ggclimat_walter_lieth(climatol_2020,est="Sant Pau d'Ordal",alt ="243", per=2020,mlab ="es")
+
+ggclimat2020b <- ggclimat2020a + labs(tag = NULL)
+
+ggclimat2020_theme <- ggclimat2020b + theme(
+  plot.title = element_blank(),
+  plot.subtitle = element_blank(),
+  axis.title.y.left = element_text(
+    size = "6"),
+  axis.title.y.right = element_text(
+    size = "6"),
+  axis.text.x.bottom = element_text(
+    colour = "black",
+    face = "bold",
+    size = "6"),
+  axis.text.y.left = element_text(
+    colour = "red",
+    face = "italic",
+    size = "6"),
+  axis.text.y.right = element_text(
+    colour = "blue",
+    face = "plain",
+    size = "6")
+)
+
+ggclimat2021a <- ggclimat_walter_lieth(climatol_2021,est="Sant Pau d'Ordal",alt ="243", per=2021,mlab ="es")
+
+ggclimat2021b <- ggclimat2021a + labs(tag = NULL)
+
+ggclimat2021_theme <- ggclimat2021b + theme(
+  plot.title = element_blank(),
+  plot.subtitle = element_blank(),
+  axis.title.y.left = element_text(
+    size = "6"),
+  axis.title.y.right = element_text(
+    size = "6"),
+  axis.text.x.bottom = element_text(
+    colour = "black",
+    face = "bold",
+    size = "6"),
+  axis.text.y.left = element_text(
+    colour = "red",
+    face = "italic",
+    size = "6"),
+  axis.text.y.right = element_text(
+    colour = "blue",
+    face = "plain",
+    size = "6")
+)
+
+ggclimat2022 <- ggclimat_walter_lieth(climatol_2022,est="Sant Pau d'Ordal",alt ="243", per=2022,mlab ="es")
+
+ggclimat2022_theme <- ggclimat2022 + theme(
+  axis.title.y.left = element_text(
+    size = "6"),
+  axis.title.y.right = element_text(
+    size = "6"),
+  axis.text.x.bottom = element_text(
+    colour = "black",
+    face = "bold",
+    size = "6"),
+  axis.text.y.left = element_text(
+    colour = "red",
+    face = "italic",
+    size = "6"),
+  axis.text.y.right = element_text(
+    colour = "blue",
+    face = "plain",
+    size = "6")
+)
+
+ggarrange(ggclimat2021_theme, ggclimat2020_theme, ggclimat2019_theme, ggclimat2018_theme + rremove("axis"), 
+          labels = c("2021", "2020", "2019", "2018"),
+          ncol = 2, nrow = 2)
+
+plot_grid(ggclimat2021_theme, ggclimat2020_theme, ggclimat2019_theme, ggclimat2018_theme, 
+          labels = "AUTO",
+          ncol = 2, nrow = 2)
+
+# Arreglant els 5 gràfics 
+#ggarrange(ggclimat2022_theme,ggarrange(ggclimat2021_theme,ggclimat2020_theme, ncol = 2, labels = c("B", "C")),ggarrange(ggclimat2019_theme,ggclimat2018_theme,ncol = 2,labels = c("D", "E")),     nrow = 3,labels = "A") 
+
+```
